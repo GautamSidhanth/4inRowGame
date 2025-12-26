@@ -32,6 +32,7 @@ function App() {
     newSocket.on('connect', () => {
       console.log('Connected to server', newSocket.id);
       setMyId(newSocket.id || null);
+      setStatusMsg('Connected to server via WebSocket!'); // Feedback on connection
       
       // Attempt reconnect if we have stored session
       const storedUser = localStorage.getItem('username');
@@ -39,6 +40,11 @@ function App() {
       if (storedUser && storedGameId) {
           newSocket.emit('reconnect_game', { username: storedUser, gameId: storedGameId });
       }
+    });
+
+    newSocket.on('connect_error', (err) => {
+      console.error('Connection error:', err);
+      setStatusMsg(`Connection Error: ${err.message}`);
     });
     
     newSocket.on('reconnect_success', (data: { gameId: string, board: number[][], turn: string }) => {
@@ -133,6 +139,13 @@ function App() {
       
       {view === 'login' && (
         <>
+            <div style={{ marginBottom: '20px', padding: '10px', background: '#333', borderRadius: '5px' }}>
+                <p><strong>Debug Info:</strong></p>
+                <p>Backend URL: {SOCKET_URL}</p>
+                <p>Socket Status: {socket?.connected ? 'Connected' : 'Disconnected'}</p>
+                <p>Socket ID: {socket?.id || 'None'}</p>
+                <p style={{ color: 'orange' }}>Status: {statusMsg}</p>
+            </div>
             <Login onJoin={handleJoin} />
             <Leaderboard />
         </>
