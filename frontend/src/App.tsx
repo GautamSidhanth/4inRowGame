@@ -6,8 +6,19 @@ import Leaderboard from './components/Leaderboard';
 import { Player, MovePayload } from './types';
 
 const getBackendUrl = () => {
-  const url = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001';
-  return url.startsWith('http') ? url : `https://${url}`;
+  // Hardcoded for reliability during debugging - the Env Var appears truncated in production
+  const productionUrl = 'https://connect4-backend-1o4i.onrender.com';
+  
+  if (import.meta.env.VITE_BACKEND_URL) {
+      console.log('Env Var:', import.meta.env.VITE_BACKEND_URL);
+  }
+  
+  // Use localhost if in development mode (checked via standard Vite env)
+  if (import.meta.env.DEV) {
+      return 'http://localhost:3001';
+  }
+  
+  return productionUrl;
 };
 
 const SOCKET_URL = getBackendUrl();
