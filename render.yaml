@@ -16,12 +16,11 @@ services:
         value: "ignore"
 
   # Frontend Service (Static Site)
-  - type: static
+  - type: static_site
     name: connect4-frontend
-    env: static
     rootDir: frontend
     buildCommand: npm install && npm run build
-    publishDir: dist
+    staticPublishPath: dist
     plan: free
     routes:
       - type: rewrite
