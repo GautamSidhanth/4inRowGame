@@ -32,7 +32,7 @@ services:
         fromService:
           type: web
           name: connect4-backend
-          property: url
+          property: host
 
 databases:
   - name: connect4-db

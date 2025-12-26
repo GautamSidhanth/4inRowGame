@@ -9,7 +9,11 @@ const Leaderboard: React.FC = () => {
   const [data, setData] = useState<User[]>([]);
 
   useEffect(() => {
-    const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001';
+    const getBackendUrl = () => {
+      const url = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001';
+      return url.startsWith('http') ? url : `https://${url}`;
+    };
+    const BACKEND_URL = getBackendUrl();
     fetch(`${BACKEND_URL}/leaderboard`)
       .then(res => res.json())
       .then(data => setData(data))

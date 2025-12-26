@@ -5,7 +5,12 @@ import Board from './components/Board';
 import Leaderboard from './components/Leaderboard';
 import { Player, MovePayload } from './types';
 
-const SOCKET_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001';
+const getBackendUrl = () => {
+  const url = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001';
+  return url.startsWith('http') ? url : `https://${url}`;
+};
+
+const SOCKET_URL = getBackendUrl();
 
 function App() {
   const [socket, setSocket] = useState<Socket | null>(null);
