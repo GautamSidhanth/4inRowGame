@@ -16,8 +16,9 @@ services:
         value: "ignore"
 
   # Frontend Service (Static Site)
-  - type: static_site
+  - type: web
     name: connect4-frontend
+    env: static
     rootDir: frontend
     buildCommand: npm install && npm run build
     staticPublishPath: dist
