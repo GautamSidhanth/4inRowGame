@@ -1,0 +1,92 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #282c34;
+  color: white;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  text-align: center;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(7, 60px);
+  grid-template-rows: repeat(6, 60px);
+  gap: 5px;
+  background-color: #003366;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 20px auto;
+}
+
+.cell {
+  width: 60px;
+  height: 60px;
+  background-color: #fff;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.cell.player-1 {
+  background-color: #e74c3c; /* Red */
+}
+
+.cell.player-2 {
+  background-color: #f1c40f; /* Yellow */
+}
+
+.cell:hover {
+  background-color: #ddd;
+}
+
+.status {
+  margin: 20px 0;
+  font-size: 1.2rem;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 300px;
+  margin: 0 auto;
+}
+
+input {
+  padding: 10px;
+  font-size: 1rem;
+}
+
+button {
+  padding: 10px;
+  font-size: 1rem;
+  background-color: #61dafb;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #4fa8d1;
+}
+
+.leaderboard {
+    margin-top: 20px;
+    border-top: 1px solid #555;
+    padding-top: 20px;
+}
+.leaderboard table {
+    margin: 0 auto;
+    width: 100%;
+    border-collapse: collapse;
+}
+.leaderboard th, .leaderboard td {
+    padding: 8px;
+    border-bottom: 1px solid #444;
+}

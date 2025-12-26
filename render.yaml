@@ -1,0 +1,41 @@
+services:
+  # Backend Service (Node.js)
+  - type: web
+    name: connect4-backend
+    env: node
+    rootDir: backend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    plan: free
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: connect4-db
+          property: connectionString
+      - key: KAFKA_BROKER
+        value: "ignore"
+
+  # Frontend Service (Static Site)
+  - type: static
+    name: connect4-frontend
+    env: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    publishDir: dist
+    plan: free
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_BACKEND_URL
+        fromService:
+          type: web
+          name: connect4-backend
+          property: url
+
+databases:
+  - name: connect4-db
+    databaseName: connect4
+    user: connect4
+    plan: free
