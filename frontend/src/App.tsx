@@ -28,7 +28,10 @@ function App() {
   const [view, setView] = useState<'login' | 'queue' | 'game'>('login');
   const [username, setUsername] = useState<string>('');
   const [gameId, setGameId] = useState<string | null>(null);
-  const [board, setBoard] = useState<number[][]>(Array(6).fill(Array(7).fill(0)));
+  // Fix: Create independent arrays for each row to avoid reference sharing
+  const getInitialBoard = () => Array.from({ length: 6 }, () => Array(7).fill(0));
+  
+  const [board, setBoard] = useState<number[][]>(getInitialBoard());
   const [turn, setTurn] = useState<string | null>(null);
   const [myId, setMyId] = useState<string | null>(null);
   const [players, setPlayers] = useState<Player[]>([]);
@@ -72,7 +75,7 @@ function App() {
       setGameId(data.gameId);
       setPlayers(data.players); 
       setTurn(data.turn);
-      setBoard(Array(6).fill(Array(7).fill(0))); 
+      setBoard(getInitialBoard()); 
       setWinner(null);
       setIsDraw(false);
       setView('game');
@@ -133,7 +136,7 @@ function App() {
   
   const reset = () => {
       setView('login');
-      setBoard(Array(6).fill(Array(7).fill(0)));
+      setBoard(getInitialBoard());
       setWinner(null);
       localStorage.removeItem('gameId');
   };
